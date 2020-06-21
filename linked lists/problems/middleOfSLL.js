@@ -49,6 +49,7 @@ const findMiddle1 = (list) => {
     - Use two pointers
     - One pointer moves one node at a time and the one moves two nodes at a time
     - When the "fast" pointer moves to the end, the "slow" pointer will be in the middle
+    - Since we have only one loop, this algorithm is twice as fast as the above
 */
 const findMiddle2 = (list) => {
     let slow = list.head;

@@ -42,6 +42,28 @@ const reverseSLL = (list) => {
 }
 
 /*
+    Improved iterative approach:
+    
+*/
+var reverseList = function(head) {
+    
+    // p1  --  p2  --  p3
+    //  o===>===o===>===o======o
+    //  o===<===o
+    let p1 = null, p2 = head, p3 = null;
+    while(p2) {
+        p3 = p2.next;
+        p2.next = p1;
+       
+        p1 = p2;
+        p2 = p3;
+    }
+    
+    return p1;
+    
+};
+
+/*
 
     Recursive solution:
 

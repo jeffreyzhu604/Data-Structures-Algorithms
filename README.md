@@ -18,4 +18,7 @@ The following are a list of data structures I plan on building:
 - Hashtables
 - Graphs
 
+# Technology
+- ES6 JavaScript
+
 # Learning Outcomes

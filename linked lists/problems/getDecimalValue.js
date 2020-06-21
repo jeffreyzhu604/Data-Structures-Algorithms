@@ -23,6 +23,9 @@
 */
 const SinglyLinkedList = require('../SinglyLinkedList.js');
 
+/*
+    Runtime: 84 ms
+*/
 const getDecimalValue = (head) => {
     let pointer = head;
     let count = 1, count2 = 1;
@@ -46,6 +49,34 @@ const getDecimalValue = (head) => {
     }
     if (pointer.getValue() == 1)
         decimalValue = decimalValue + Math.pow(2, count - count2);
+    console.log(decimalValue);
+}
+
+/*
+    Runtime: 68 ms
+
+    Some improvements to clean up code:
+    - in the while loop, I had:
+        while (pointer.getNextNode())
+
+        - This is forces me to check the value afterwards since I would be one node behind 
+          while iterating through the linked list. If I check that the pointer is null, that
+          means that the linked list has been fully traversed.
+*/
+const getDecimalValue2 = (head) => {
+    let pointer = head;
+    let count = 0;
+    let decimalValue = 0;
+    while (pointer) {
+        count++;
+        pointer = pointer.getNextNode();
+    }
+    pointer = head;
+    while (pointer) {
+        decimalValue += Math.pow(2, count-1) * pointer.getValue();
+        pointer = pointer.getNextNode();
+        count--;
+    }
     console.log(decimalValue);
 }
 
@@ -74,4 +105,4 @@ ssl.insertHead(0);
 ssl.insertHead(0);
 ssl.insertHead(1);
 
-getDecimalValue(ssl.head); 
+getDecimalValue2(ssl.head); 

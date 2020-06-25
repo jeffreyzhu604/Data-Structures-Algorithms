@@ -1,5 +1,6 @@
 /*
     Reverse Linked List: 
+    Runtime: 76ms
 
     Reverse a singly linked list
 
@@ -43,29 +44,47 @@ const reverseSLL = (list) => {
 
 /*
     Improved iterative approach:
+    Runtime: 60ms
+
+    Algorithm:
+    - Use 3 pointers:
+        - One to reference the head of the list as you traverse
+        - Two to reference the head of the two linked lists as you break the chain
+    - Begins by traversing the list from the original head reference (pointer1)
+    - Set a pointer to reference the second node (pointer2)
+    - Since we have a reference from the second node onwards, we can break the link from the
+      first node to the second
+    - Set the first node to point to null (pointer3)
+    - Now we can set pointer2 as the new head to continue traversing and pointer3 to be the
+      new head of the list we're building
+    - No extra memory was used
+    - Only one loop was used
+
+    Time Complexity: O(n)
+    Space Complexity: O(1)
     
 */
-var reverseList = function(head) {
-    
-    // p1  --  p2  --  p3
-    //  o===>===o===>===o======o
-    //  o===<===o
-    let p1 = null, p2 = head, p3 = null;
-    while(p2) {
-        p3 = p2.next;
-        p2.next = p1;
-       
-        p1 = p2;
-        p2 = p3;
+const reverseSLL2 = (list) => {
+    let pointer1 = list.head, pointer2 = null, pointer3 = null;
+    while(pointer1) {
+        pointer2 = pointer1.getNextNode();
+        pointer1.setNextNode(pointer3);
+        pointer3 = pointer1;
+        pointer1 = pointer2;
     }
-    
-    return p1;
-    
+    while (pointer3) {
+        console.log(pointer3.getValue());
+        pointer3 = pointer3.getNextNode();
+    }
 };
 
 /*
 
     Recursive solution:
+    Runtime: 64ms
+
+    Time Complexity: O(n)
+    Space Complexity: O(1)
 
     Input: 1 -> 2 -> 3 -> 4 -> 5 -> null
 
@@ -79,15 +98,23 @@ var reverseList = function(head) {
     4 -> 5 -> null
     4 -> 5 ->
 */
-var reverseList = function(head) {
-    if (head === null || head.next === null) return head;
-    
-    const p = reverseList(head.next);
-    
-    head.next.next = head;
-    head.next = null;
-    
-    return p;
+const reverseSLL3 = function(list) {
+
+    const recursiveHelper = (node) => {
+        if (node === null || node.getNextNode() === null) return node;
+        
+        const p = recursiveHelper(node.getNextNode());
+        
+        node.getNextNode().getNextNode().setNextNode(node);
+        node.setNextNode(null);
+        
+        return p;        
+    }
+    head = recursiveHelper(list.head);
+    while (head) {
+        console.log(head);
+        head = head.getNextNode();
+    }
 };
 
 let sll = new SinglyLinkedList();
@@ -96,7 +123,8 @@ sll.insertHead(4);
 sll.insertHead(3);
 sll.insertHead(2);
 sll.insertHead(1);
-reverseSLL(sll);
+sll.display();
+reverseSLL3(sll);
 
 
 

@@ -9,7 +9,6 @@ class Stack {
      */
     constructor() {
         this.stack = new SinglyLinkedList();
-        console.log('creating stack');
     }
 
     /**
@@ -24,17 +23,21 @@ class Stack {
     pop() {
         if (!this.stack.head)
             console.log(`Stack is empty`)
-        else 
+        else {
             console.log(`Popping ${this.stack.head.getValue()}`);
-        return this.stack.deleteHead();
+            return this.stack.deleteHead();            
+        }
+
     }
 
     peak() {
         if (!this.stack.head)
             console.log(`Stack is empty`)
-        else 
+        else {
             console.log(`Peaking the top of the stack ${this.stack.head.getValue()}`)
-        return this.stack.head;
+            return this.stack.head.getValue();            
+        }
+
     }
 
     size() {    
@@ -43,18 +46,20 @@ class Stack {
     }
 }
 
-let stack = new Stack();
+module.exports = Stack;
 
-stack.push(1);
-stack.push(2);
-stack.push(3);
+// let stack = new Stack();
 
-stack.peak();
-stack.size();
+// stack.push(1);
+// stack.push(2);
+// stack.push(3);
 
-stack.pop();
-stack.pop();
-stack.pop();
+// stack.peak();
+// stack.size();
 
-stack.peak();
-stack.size();
+// stack.pop();
+// stack.pop();
+// stack.pop();
+
+// stack.peak();
+// stack.size();

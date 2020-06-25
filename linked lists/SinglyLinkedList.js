@@ -127,6 +127,7 @@ class SinglyLinkedList {
             - The next node of the head is set to null
             - The temporary variable now becomes the head
         */
+       let removedNode = this.head;
        if (this.length == 1) {
            this.head = null;
            this.tail = null;
@@ -135,8 +136,8 @@ class SinglyLinkedList {
             this.head.setNextNode(null);
             this.head = temp;           
        }
-
        this.length = this.length - 1;
+       return removedNode.getValue();
     }
 
     /**
@@ -148,6 +149,7 @@ class SinglyLinkedList {
             Edge case:
             - If we are removing at n-1
         */
+        let removedNode;
         let pointer = this.head;
         let count = 0;
         if (n > this.length)
@@ -161,20 +163,24 @@ class SinglyLinkedList {
         else {
             while (pointer) {
                 count++;
-                if (count == n - 1)
-                    break;
+                if (count == n - 1) {
+                    removedNode = pointer.getNextNode();
+                    break;                    
+                }
                 pointer = pointer.getNextNode();
             }
             pointer.setNextNode(pointer.getNextNode().getNextNode());
             pointer.getNextNode().setNextNode(null);
             this.length = this.length - 1;
         }
+        return removedNode.getValue();
     }
 
     /**
      * Deleting a node from the tail of a linked list
      */
     deleteTail() {
+        let removedNode = this.tail;
         if (this.length == 1) {
             this.tail = null;
             this.head = null;
@@ -183,8 +189,9 @@ class SinglyLinkedList {
             let pointer = this.head;
             while (pointer) {
                 count++;
-                if (count == this.length - 1)
-                    break;
+                if (count == this.length - 1) {
+                    break;                    
+                }
                 pointer = pointer.getNextNode();
             }
             pointer.setNextNode(null);
@@ -192,6 +199,7 @@ class SinglyLinkedList {
         }
 
         this.length = this.length - 1;
+        return removedNode.getValue();
     }
 
     /**
@@ -267,7 +275,7 @@ class SinglyLinkedList {
     }
 }
 
-// module.exports = SinglyLinkedList;
+module.exports = SinglyLinkedList;
 
 // let sll = new SinglyLinkedList();
 // sll.insertHead(2);
@@ -280,25 +288,25 @@ class SinglyLinkedList {
 // sll.display(); // 4 5 3 1 2
 // sll.getLength();
 
-let sll2 = new SinglyLinkedList();
-sll2.insertHead(4);
-sll2.insertHead(3);
-sll2.insertHead(2);
-sll2.insertHead(1);
-sll2.insertNthPosition(5,2);
-// sll2.insertNthPosition(6,10);
-// sll2.display(); // 1 5 2 3 4
-sll2.insertNthPosition(6, 4);
-// sll2.display() // 1 5 2 6 3 4
-sll2.insertTail(10);
-sll2.insertTail(11);
-// sll2.display(); // 1 5 2 6 3 4 10 11
-sll2.deleteHead()
-sll2.deleteHead();
-sll2.display(); // 2 6 3 4 10 11
-sll2.deleteTail();
-sll2.deleteTail();
-// sll2.display(); // 2 6 3 4
-sll2.deleteNthPosition(3);
-sll2.deleteNthPosition(2);
-sll2.display(); // 2 4
+// let sll2 = new SinglyLinkedList();
+// sll2.insertHead(4);
+// sll2.insertHead(3);
+// sll2.insertHead(2);
+// sll2.insertHead(1);
+// sll2.insertNthPosition(5,2);
+// // sll2.insertNthPosition(6,10);
+// // sll2.display(); // 1 5 2 3 4
+// sll2.insertNthPosition(6, 4);
+// // sll2.display() // 1 5 2 6 3 4
+// sll2.insertTail(10);
+// sll2.insertTail(11);
+// // sll2.display(); // 1 5 2 6 3 4 10 11
+// sll2.deleteHead()
+// sll2.deleteHead();
+// sll2.display(); // 2 6 3 4 10 11
+// sll2.deleteTail();
+// sll2.deleteTail();
+// // sll2.display(); // 2 6 3 4
+// sll2.deleteNthPosition(3);
+// sll2.deleteNthPosition(2);
+// sll2.display(); // 2 4

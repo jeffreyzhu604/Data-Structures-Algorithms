@@ -46,18 +46,20 @@ class Queue {
     }
 }
 
-let queue = new Queue();
+module.exports = Queue;
 
-queue.push(1);
-queue.push(2);
-queue.push(3);
+// let queue = new Queue();
 
-queue.peak();
-queue.size();
+// queue.push(1);
+// queue.push(2);
+// queue.push(3);
 
-queue.pop();
-queue.pop();
-queue.pop();
+// queue.peak();
+// queue.size();
 
-queue.peak();
-queue.size();
+// queue.pop();
+// queue.pop();
+// queue.pop();
+
+// queue.peak();
+// queue.size();

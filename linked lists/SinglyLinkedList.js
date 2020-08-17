@@ -137,7 +137,7 @@ class SinglyLinkedList {
             this.head = temp;           
        }
        this.length = this.length - 1;
-       return removedNode.getValue();
+       return removedNode;
     }
 
     /**
@@ -173,7 +173,7 @@ class SinglyLinkedList {
             pointer.getNextNode().setNextNode(null);
             this.length = this.length - 1;
         }
-        return removedNode.getValue();
+        return removedNode;
     }
 
     /**
@@ -199,7 +199,7 @@ class SinglyLinkedList {
         }
 
         this.length = this.length - 1;
-        return removedNode.getValue();
+        return removedNode;
     }
 
     /**

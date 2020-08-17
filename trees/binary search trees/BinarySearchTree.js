@@ -1,4 +1,6 @@
 const Node = require('./Node');
+const Stack = require('../../stacks/Stack');
+const Queue = require('../../queues/Queue');
 /*
     Operations:
     - Add a node
@@ -129,6 +131,121 @@ class BinarySearchTree {
         recursive(this.root);
         console.log(res);
     }
+
+    /*
+        Algorithm:
+        - Push root node to stack and set currentNode = currentNode.left until 
+          currentNode = null
+        - If currentNode = null AND stack is not empty
+            - Print top of stack, pop the stack, set current = poppedNode.right
+        - If currentNode = null AND stack is empty
+            - Return
+    */
+    inorderIter() {
+        let stack = new Stack();
+        let res = '';
+        let current = this.root;
+        while(true) {
+            if (current) {
+                stack.push(current);
+                current = current.getLeftNode();                
+            }
+            if (current == null && stack.size() > 0) {
+                let poppedNode = stack.pop();
+                res = res + `${poppedNode.getValue().getValue()} `;
+                current = poppedNode.getValue().getRightNode();
+            }
+            if (current == null && stack.size() == 0) {
+                console.log(res);
+                break;
+            }            
+        }
+    }
+
+    preorder() {
+        let res = '';
+        const recursive = (node) => {
+            res = res + `${node.getValue()} `;
+            if (node.left)
+                recursive(node.left);
+            if (node.right)
+                recursive(node.right);
+        }
+        recursive(this.root);
+        console.log(res);
+    }
+
+    /*
+        Algorithm:
+        - Push the root
+        - If stack is not empty
+            - Pop and print
+            - Push the right of the popped
+            - Push the left of the popped
+    */
+    preorderIter() {
+        let res = '';
+        let stack = new Stack();
+        stack.push(this.root);
+        while (true) {
+            if (stack.size() > 0) {
+                let removed = stack.pop();
+                res = res + `${removed.getValue().getValue()} `;
+                if (removed.getValue().getRightNode())
+                    stack.push(removed.getValue().getRightNode());
+                if (removed.getValue().getLeftNode())
+                    stack.push(removed.getValue().getLeftNode());
+            } else if (stack.size() == 0) {
+                break;
+            }
+        }
+        console.log(res);
+    }
+
+    postorder() {
+        let res = '';
+        const recursive = (node) => {
+            if (node.left)
+                recursive(node.left);
+            if (node.right)
+                recursive(node.right);
+            res = res + `${node.getValue()} `;
+        }
+        recursive(this.root);
+        console.log(res);
+    }
+    /*
+        Algorithm:
+        - Start at the root and push it
+        - Set the current to the left node
+        - 
+    */
+    postorderIter() {
+
+    }
+
+    levelOrder() {
+        let queue = new Queue();
+        let res = '';
+        queue.push(this.root);
+        while(queue.size() > 0) {
+            let removed = queue.pop();
+            res = res + `${removed.getValue().getValue()} `;
+            if (removed.getValue().getLeftNode())
+                queue.push(removed.getValue().getLeftNode());
+            if (removed.getValue().getRightNode())
+                queue.push(removed.getValue().getRightNode());
+        }
+        console.log(res);
+    }
+
+    /*
+
+    */
+    getHeight(node) {
+        if (!node) return 0;
+        return 1 + Math.max(this.getHeight(node.getLeftNode()), this.getHeight(node.getRightNode()));
+    }
 }
 
 let bst = new BinarySearchTree();
@@ -172,5 +289,84 @@ bst2.inorder();
 bst2.delete(60);
 bst2.inorder();
 bst2.delete(20);
+/*
+                                    50
+                                  /    \
+                                30      80
+                               /  \    /  \
+                             20   40  60   100
+                                          /   \
+                                         90   110 
+
+                                    50
+                                  /    \
+                                30      60
+                               /  \       \
+                             20   40      100
+                                          /   \
+                                         90   110    
+
+                                    50
+                                  /    \
+                                30      60
+                               /  \    /  \
+                             20   40  55  100
+                                          /   \
+                                         90   110      
+
+                                    50
+                                  /    \
+                                30      60
+                               /  \    /  \
+                             20   40  55  100
+                                     /    /   \
+                                    53   90   110 
+
+                                    50
+                                  /    \
+                                30      55
+                               /  \    /  \
+                             20   40  53  100
+                                          /   \
+                                        90   110     
+
+                                    50
+                                  /    \
+                                30      55
+                                  \    /  \
+                                  40  53  100
+                                          /  \
+                                         90   110                                                                                                                                                                                                       
+                                         
+
+    Inorder Traversal:
+    Output: 30 40 50 53 55 90 100 110
+
+    Preorder Traversal:
+    Output: 50 30 40 55 53 100 90 110
+
+    Postorder Traversal:
+    Output: 40 30 53 90 110 100 55 50
+
+    Level Order Traversal:
+    Output: 50 30 55 40 53 100 90 110
+
+    Height: 4
+*/
+console.log('BST #2: Inorder Traversal')
+bst2.inorderIter();
 bst2.inorder();
-bst2.delete(1);
+
+console.log('BST #2: Preorder Traversal')
+bst2.preorderIter();
+bst2.preorder();
+
+console.log('BST #2: Postorder Traversal')
+bst2.postorderIter();
+bst2.postorder();
+
+console.log('BST #2: Level Order Traversal')
+bst2.levelOrder();
+
+console.log('BST #2: Height');
+console.log(bst2.getHeight(bst2.root));
